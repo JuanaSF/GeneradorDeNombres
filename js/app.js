@@ -13,7 +13,7 @@ function cargarNombres(e) {
     const cantidad = document.getElementById('numero').value;
 
     let url = '';
-    url += 'https://randomuser.me/api/?';
+    url += 'https://randomuser.me/api/1.3/?inc=name&';
 
     //Si se elige un origen especifico se lo agrega a la url
     if(origenSeleccionado != '') {
@@ -28,6 +28,26 @@ function cargarNombres(e) {
         url += `results=${cantidad}`;
     }
 
-    console.log(url);
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.onload = function() {
 
+        if(this.status === 200) {
+            const response = JSON.parse( this.responseText);
+            let nombres = response.results;
+            
+            let htmlNombres = '<h2>Nombres Generados</h2>';
+            htmlNombres += '<ul class="lista">';
+            nombres.forEach(function(nombre) {
+                htmlNombres += `
+                    <li>${nombre.name.first}</li>
+                `;
+            })
+            htmlNombres += '</ul>';
+
+            document.getElementById('resultado').innerHTML = htmlNombres;
+        }
+    }
+
+    xhr.send();
 }
