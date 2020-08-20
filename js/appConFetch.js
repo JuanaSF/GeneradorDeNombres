@@ -27,15 +27,13 @@ function cargarNombres(e) {
     }
 
     fetch(url)
-        .then(function(res) {
-            return res.json();
-        })
-        .then(function(datos) {
+        .then(res => res.json())
+        .then(datos => {
             let nombres = datos.results;
 
             let htmlNombres = '<h2>Nombres Generados</h2>';
             htmlNombres += '<ul class="lista">';
-            nombres.forEach(function(nombre){
+            nombres.forEach(nombre => {
                 htmlNombres += `
                     <li>${nombre.name.first}</li>
                 `;
@@ -44,7 +42,5 @@ function cargarNombres(e) {
 
             document.getElementById('resultado').innerHTML = htmlNombres;
         })
-        .catch(function(error) {
-            console.log(error)
-        })
+        .catch(error => console.log(error))
 }
